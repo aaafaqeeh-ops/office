@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F3F5F8">
+<meta name="description" content="حالتي الآن ووسيلة التواصل المناسبة، وجدولي الأسبوعي · Live status and weekly schedule">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://aaafaqeeh-ops.github.io/office/">
+<meta property="og:title" content="جدول الأعمال والحالة الراهنة | د. أكرم فقيه">
+<meta property="og:description" content="حالتي الآن ووسيلة التواصل المناسبة، وجدولي الأسبوعي · Schedule &amp; Current Status">
+<meta property="og:image" content="https://aaafaqeeh-ops.github.io/office/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ar_SA">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aaafaqeeh-ops.github.io/office/preview.png">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="د. أكرم">
+<meta name="application-name" content="د. أكرم">
+<title>مكتب د. أكرم فقيه</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=IBM+Plex+Mono:wght@500&family=Noto+Kufi+Arabic:wght@700&display=swap">
+<style>
+/* Layout: a visitor at the door sees one thing — the status and what to do now. The week stays folded away. */
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --ink:#16202E; --muted:#5D6A7C; --line:#DCE2EA; --accent:#1F4E8C;
+  --ok:#17845A; --busy:#B57A06; --stop:#C3342A; --idle:#7F8A99; --away:#6553B0;
+  --f-display:"Noto Kufi Arabic","IBM Plex Sans Arabic",Tahoma,sans-serif;
+  --f-body:"IBM Plex Sans Arabic",Tahoma,"Segoe UI",sans-serif;
+  --f-num:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E131A; --surface:#161E28; --ink:#E6EBF1; --muted:#93A0B1; --line:#25303D; --accent:#86AEE6;
+  --ok:#3BC48A; --busy:#E6AE3A; --stop:#F0675C; --idle:#8995A5; --away:#A796F0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E131A; --surface:#161E28; --ink:#E6EBF1; --muted:#93A0B1; --line:#25303D; --accent:#86AEE6;
+  --ok:#3BC48A; --busy:#E6AE3A; --stop:#F0675C; --idle:#8995A5; --away:#A796F0; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.6;direction:rtl;padding-inline:16px;padding-block:24px 40px}
+.wrap{max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.num{font-family:var(--f-num);font-variant-numeric:tabular-nums;direction:ltr;unicode-bidi:isolate}
+
+.who{display:flex;align-items:center;gap:12px}
+.who img{width:52px;height:52px;border-radius:50%;object-fit:cover;flex:none;box-shadow:0 0 0 1px var(--line)}
+.who h1{font-family:var(--f-display);font-size:18px;line-height:1.35;margin:0}
+.who p{margin:2px 0 0;color:var(--muted);font-size:12.5px;line-height:1.45;white-space:pre-line}
+
+.welcome{display:flex;flex-direction:column;gap:2px;font-size:14.5px;line-height:1.75;color:var(--muted);text-wrap:pretty}
+.welcome p{margin:0}
+.welcome .salam{color:var(--ink);font-weight:500}
+/* status */
+.status{--c:var(--idle);background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:26px 20px 20px;position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px}
+.status::before{content:"";position:absolute;inset:0;background:var(--c);opacity:.09;pointer-events:none}
+.status>*{position:relative}
+.status[data-s="office"]{--c:var(--ok)} .status[data-s="busy"],.status[data-s="gap"],.status[data-s="admin"]{--c:var(--busy)} .status[data-s="lecture"]{--c:var(--stop)} .status[data-s="exam"]{--c:var(--stop)} .status[data-s="council"]{--c:var(--stop)} .status[data-s="away"]{--c:var(--away)}
+.s-top{display:flex;align-items:center;gap:12px}
+.dot{width:16px;height:16px;border-radius:50%;background:var(--c);flex:none;box-shadow:0 0 0 6px color-mix(in srgb,var(--c) 22%,transparent)}
+.status[data-s="office"] .dot{animation:pulse 2.4s ease-in-out infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 10px color-mix(in srgb,var(--c) 8%,transparent)}}
+.s-label{font-family:var(--f-display);font-size:23px;line-height:1.35;margin:0;color:var(--c);text-wrap:balance}
+.s-detail{margin:6px 0 0;font-size:16px;text-wrap:pretty}
+.s-until{margin:0;color:var(--muted);font-size:14px}
+
+.act{margin-top:14px;display:flex;gap:8px}
+summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.nomsg{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;flex:none;color:var(--stop);background:color-mix(in srgb,var(--stop) 12%,transparent)}
+.nomsg svg{width:16px;height:16px}
+.next{margin-top:14px;padding-top:12px;border-top:1px solid color-mix(in srgb,var(--c) 30%,var(--line));font-size:14.5px}
+.next span{color:var(--muted)}
+
+/* week, folded */
+details{background:var(--surface);border:1px solid var(--line);border-radius:16px}
+summary{list-style:none;cursor:pointer;padding:14px 16px;display:flex;justify-content:space-between;align-items:center;font-weight:500;font-size:14.5px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"";width:8px;height:8px;border-inline-start:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(-45deg);transition:transform .2s}
+details[open] summary::after{transform:rotate(135deg)}
+.wk{padding:0 12px 12px}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:10px}
+.day{border:0;border-radius:0;background:none;border-top:1px solid var(--line)}
+.day:first-child{border-top:0}
+.day>summary{padding:12px 4px;font-size:14.5px;font-weight:700;justify-content:flex-start;gap:8px}
+.day>summary::after{margin-inline-start:auto}
+.day>summary em.dt{color:var(--stop);background:color-mix(in srgb,var(--stop) 12%,transparent)}
+.day>summary em.pt{color:var(--muted);background:color-mix(in srgb,var(--idle) 16%,transparent)}
+.duty.pd{background:color-mix(in srgb,var(--idle) 10%,transparent);border-color:color-mix(in srgb,var(--idle) 30%,transparent)}
+.duty.pd svg{color:var(--muted)}
+.duty{display:flex;align-items:flex-start;gap:8px;margin:0 0 10px;padding:9px 12px;border-radius:10px;font-size:13.5px;color:var(--ink);background:color-mix(in srgb,var(--stop) 9%,transparent);border:1px solid color-mix(in srgb,var(--stop) 30%,transparent)}
+.duty svg{width:16px;height:16px;flex:none;margin-top:3px;color:var(--stop)}
+.duty .dtx{display:flex;flex-direction:column;gap:1px}
+.duty .dtx>span{color:var(--muted);font-size:12.5px}
+.duty .nw{white-space:nowrap}
+.dd{font-weight:400;font-size:12.5px;color:var(--muted);white-space:nowrap}
+.dsum{padding:12px 4px;font-size:14.5px;font-weight:700;display:flex;gap:8px;align-items:center;color:var(--muted)}
+.dsum em.wk{color:var(--muted);background:color-mix(in srgb,var(--idle) 15%,transparent)}
+.day>summary em,.dsum em{font-style:normal;font-weight:500;font-size:11.5px;color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent);padding:1px 8px;border-radius:999px}
+.sch{width:100%;border-collapse:collapse;font-size:14px;margin:0 0 12px}
+.sch th{font-size:11.5px;font-weight:500;color:var(--muted);text-align:start;padding:0 8px 6px}
+.sch td{padding:9px 8px;border-top:1px solid var(--line);vertical-align:middle}
+.sch td.t{white-space:nowrap;color:var(--muted);font-size:13px;width:1%}
+.sch .a{display:flex;align-items:center;gap:8px}
+.sch i{width:8px;height:8px;border-radius:50%;flex:none}
+.sch i.office{background:var(--ok)} .sch i.lecture{background:var(--stop)} .sch i.busy,.sch i.gap{background:var(--busy)} .sch i.break,.sch i.comp{background:var(--idle)}
+.sch tr.cur td{background:color-mix(in srgb,var(--accent) 9%,transparent);font-weight:700;color:var(--ink)}
+
+.clock{display:flex;justify-content:space-between;align-items:baseline;gap:4px 12px;flex-wrap:wrap;color:var(--muted);font-size:13px;line-height:1.35;padding-block:8px;border-block:1px solid var(--line)}
+.clock b{color:var(--ink);font-size:18px;font-weight:500}
+.clock #day{white-space:nowrap}
+.clock b small{font-family:var(--f-body);font-size:12px;font-weight:500;color:var(--muted)}
+.channels{list-style:none;margin:4px 0 0;padding:0;display:flex;justify-content:center;gap:28px}
+.channels li{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:12.5px;color:var(--muted);text-align:center;max-width:96px;line-height:1.35}
+.ci{position:relative;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;background:var(--surface);border:1px solid var(--line);color:var(--ink)}
+.ci>svg{width:24px;height:24px}
+.channels li.n .ci{color:var(--muted)}
+.bd{position:absolute;bottom:-3px;inset-inline-end:-3px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;color:#fff;border:2px solid var(--bg)}
+.bd svg{width:12px;height:12px}
+.channels li.y .bd{background:var(--ok)} .channels li.n .bd{background:var(--stop)} .channels li.w .bd{background:var(--busy)}
+.lang{display:flex;justify-content:space-between;direction:ltr;margin-bottom:-6px}
+.ib{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;padding:0;color:var(--accent);background:var(--surface);border:1px solid var(--line);cursor:pointer;font:700 17px var(--f-body);line-height:1}
+.ib svg{width:19px;height:19px}
+.ib:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+:root[lang="en"] body{direction:ltr}
+:root[lang="en"] .clock{text-align:right}
+footer{font-size:12.5px;color:var(--muted);text-align:center}
+@media (prefers-reduced-motion:reduce){.dot{animation:none!important} summary::after{transition:none}}
+</style>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <div class="lang"><button type="button" class="ib" id="themeBtn" aria-label="الوضع الداكن"></button><button type="button" class="ib" id="langBtn" lang="en" aria-label="English"></button></div>
+  <header class="who">
+    <img src="data:image/jpeg;base64,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" alt="د. أكرم فقيه" width="52" height="52">
+    <div>
+      <h1 data-t="name">د. أكرم فقيه</h1>
+      <p data-t="dept">أستاذ مساعد
+قسم الهندسة الميكانيكية
+كلية ينبع الصناعية
+الهيئة الملكية للجبيل وينبع</p>
+    </div>
+  </header>
+  <div class="clock"><b id="clock">--:--</b><span id="day"></span></div>
+
+  <div class="welcome">
+    <p class="salam" data-t="salam">السلام عليكم ورحمة الله وبركاته،</p>
+    <p data-t="welcome">عزيزي الطالب / الزميل، أشكر لك حرصك. وقتك ووقتي أمانة، ومراعاة حدود كلٍّ منا مسؤولية مشتركة؛ ولذلك جعلت حالتي أمامك في كل لحظة، لنلتقي ونتواصل في الوقت المناسب وبالطريقة الأنسب، ونعطي كل شيء حقه.</p>
+  </div>
+
+  <div class="status" id="status" data-s="off" aria-live="polite">
+    <div class="s-top"><span class="dot" aria-hidden="true"></span><p class="s-label" id="sLabel">…</p></div>
+    <p class="s-detail" id="sDetail"></p>
+    <p class="s-until" id="sUntil"></p>
+
+
+  </div>
+
+  <ul class="channels" aria-label="وسائل التواصل"><li class="y" id="chCall"><span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z"/></svg><b class="bd" id="chCallBd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></b></span><span data-t="ch_call">جوال / سيسكو</span></li><li class="y"><span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/></svg><b class="bd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></b></span><span data-t="ch_mail">بلاكبورد / بريد / بيم</span></li><li class="n"><span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M5 4.5h14a1.5 1.5 0 0 1 1.5 1.5v9.5a1.5 1.5 0 0 1-1.5 1.5H10l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5V6A1.5 1.5 0 0 1 5 4.5z"/><circle cx="8.5" cy="10.8" r=".6" fill="currentColor"/><circle cx="12" cy="10.8" r=".6" fill="currentColor"/><circle cx="15.5" cy="10.8" r=".6" fill="currentColor"/></svg><b class="bd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg></b></span><span data-t="ch_wa">واتساب / رسالة</span></li></ul>
+
+  <details id="week">
+    <summary data-t="wk_title">الجدول الأسبوعي</summary>
+    <div class="wk" id="weekBody"></div>
+  </details>
+
+  <footer><span data-t="office">مكتب</span> <span class="num">ACX-F99</span></footer>
+</div>
+
+<script>
+/* ============ الإعدادات ============ */
+const CONFIG = {
+  workStart: "07:00", workEnd: "16:05",
+  breakStart: "12:05", breakEnd: "13:15",
+  // 0 = الأحد ... 4 = الخميس — الفصل الأول 1448هـ
+  week: {
+    0: [ {from:"07:15",to:"09:05",type:"lecture",title:"ME305",place:"قاعة ACXF39"},
+         {from:"09:15",to:"10:05",type:"office"},
+         {from:"10:15",to:"12:05",type:"lecture",title:"ME400",place:"القاعة لم تُحدَّد بعد"},
+         {from:"13:15",to:"16:05",type:"lecture",title:"ME306",place:"قاعة ACXF42"} ],
+    1: [ {from:"07:15",to:"08:05",type:"lecture",title:"ME305",place:"قاعة ACXF38"},
+         {from:"08:15",to:"12:05",type:"office"},
+         {from:"13:15",to:"16:05",type:"office"} ],
+    2: [ {from:"07:15",to:"10:05",type:"busy"},
+         {from:"10:15",to:"12:05",type:"office"},
+         {from:"13:15",to:"16:05",type:"lecture",title:"ME306",place:"قاعة ACXF39"} ],
+    3: [ {from:"07:15",to:"10:05",type:"busy"},
+         {from:"10:15",to:"12:05",type:"lecture",title:"ME400",place:"القاعة لم تُحدَّد بعد"},
+         {from:"13:15",to:"16:05",type:"office"} ],
+    4: [ {from:"07:15",to:"11:05",type:"busy"},
+         {from:"11:15",to:"12:05",type:"office"},
+         {from:"13:15",to:"16:05",type:"office"} ]
+  },
+  // استثناء مؤقت يتقدّم على الجدول:
+  // override: {from:"2026-10-14", to:"2026-10-15", label:"في مؤتمر خارج الجامعة", detail:"أعود الأحد إن شاء الله", callable:false}
+  override: null,
+  // مهام مؤقتة (مراقبة exam، مجلس قسم council): تغلب أي حالة وقت التقاطع، وتظهر تنبيهًا فوق يومها في الجدول
+  duties: [
+    {date:"2026-10-25", from:"09:09", to:"10:30", kind:"admin", silent:true},
+    {date:"2026-10-25", from:"10:30", to:"13:30", kind:"exam"}
+  ],
+  // فترات بتاريخ (اختبارات نصفية midterm): المحاضرات تظهر ساعات مكتبية، وتظهر شارة وسطر تنبيه رمادي على أيامها في الجدول
+  // تعديل لوقت محدد في يوم محدد: يستبدل ما في الجدول خلال هذا الوقت فقط
+  changes: [
+    {date:"2026-10-25", from:"07:00", to:"08:00", type:"comp", silent:true},
+    {date:"2026-10-25", from:"15:10", to:"16:05", type:"comp", silent:true, msg:{ar:"دمتم بخير.. نلتقي ونتواصل غدًا بإذن الله.", en:"Stay well. Let's meet and connect tomorrow, Allah willing."}}
+  ],
+  periods: [
+    {from:"2026-10-19", to:"2026-10-25", kind:"midterm", lectureAs:"office"}
+  ]
+};
+/* =================================== */
+
+const T={
+ ar:{dir:"rtl",midterm_tag:"اختبارات نصفية",midterm_line:"فترة الاختبارات النصفية",btnLabel:"English",themeDark:"الوضع الداكن",themeLight:"الوضع الفاتح",days:["الأحد","الاثنين","الثلاثاء","الأربعاء","الخميس","الجمعة","السبت"],am:"ص",pm:"م",until:"حتى",ends:"تنتهي",
+  name:"د. أكرم فقيه",dept:"أستاذ مساعد\nقسم الهندسة الميكانيكية\nكلية ينبع الصناعية\nالهيئة الملكية للجبيل وينبع",salam:"السلام عليكم ورحمة الله وبركاته،",
+  welcome:"عزيزي الطالب / الزميل، أشكر لك حرصك. وقتك ووقتي أمانة، ومراعاة حدود كلٍّ منا مسؤولية مشتركة؛ ولذلك جعلت حالتي أمامك في كل لحظة، لنلتقي ونتواصل في الوقت المناسب وبالطريقة الأنسب، ونعطي كل شيء حقه.",
+  ch_call:"جوال / سيسكو",ch_mail:"بلاكبورد / بريد / بيم",ch_wa:"واتساب / رسالة",office:"مكتب",
+  office_l:"ساعات مكتبية",office_d:"حيّاك حضورًا أو اتصالًا.. ومرحبًا ألف!",
+  gap_l:"فترة ما بين المهام",gap_d:"إن كان الأمر لا يحتمل التأجيل، فحيّاك اتصالًا تكرّمًا.. مع تقديري وامتناني.",
+  lecture_l:"مقرر",lecture_d:"كرمًا عدم المقاطعة.. مع خالص الاعتذار.",
+  busy_l:"عمل مركّز",busy_d:"إن كان الأمر لا يحتمل التأجيل، فحيّاك اتصالًا تكرّمًا.. مع تقديري وامتناني.",
+  break_l:"استراحة الظهر",break_d:"صلاة وشيء من الراحة والروقان.. تقبّل الله منا ومنكم.",
+  comp_l:"ساعات تعويضية",comp_d:"دمتم بخير.. نلتقي ونتواصل بعد انتهائها بإذن الله.",wk_comp:"ساعات تعويضية",
+  off_l:"خارج الدوام",off_d:"دمتم بخير.. نلتقي ونتواصل في يوم العمل القادم بإذن الله.",
+  exam_l:"في مراقبة اختبار",exam_d:"نلتقي ونتواصل بعد الانتهاء بإذن الله.",
+  admin_l:"في الإدارة",admin_d:"إن كان الأمر لا يحتمل التأجيل، فحيّاك اتصالًا تكرّمًا.. مع تقديري وامتناني.",
+  council_l:"في اجتماع مجلس القسم",council_d:"نلتقي ونتواصل بعد الانتهاء بإذن الله.",
+  wk_title:"الجدول الأسبوعي",weekend:"إجازة نهاية الأسبوع",wk_lecture:"مقرر",wk_office:"ساعات مكتبية",wk_busy:"عمل مركّز",wk_gap:"فترة ما بين المهام",wk_break:"استراحة الظهر",today:"اليوم",col_time:"الوقت",col_act:"النشاط",exam_tag:"مراقبة",exam_line:"مراقبة اختبار",council_tag:"اجتماع",council_line:"اجتماع مجلس القسم"},
+ en:{dir:"ltr",midterm_tag:"Midterms",midterm_line:"Midterm exams period",btnLabel:"العربية",themeDark:"Dark mode",themeLight:"Light mode",days:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],am:"AM",pm:"PM",until:"Until",ends:"Ends",
+  name:"Dr. Akram Faqeeh",dept:"Assistant Professor\nMechanical Engineering Department\nYanbu Industrial College\nRoyal Commission for Jubail and Yanbu",salam:"Assalamu alaikum,",
+  welcome:"Dear student / colleague, thank you for your care. Your time and mine are a trust, and respecting each other's boundaries is a shared responsibility; so my status is here for you at every moment, so that we meet and connect at the right time, in the right way, and give everything its due.",
+  ch_call:"Mobile / Cisco",ch_mail:"Blackboard / Email / Beem",ch_wa:"WhatsApp / Text",office:"Office",
+  office_l:"Office hours",office_d:"Feel free to drop by or call. Most welcome!",
+  gap_l:"Between tasks",gap_d:"If it can't wait, kindly call. With my thanks and appreciation.",
+  lecture_l:"Course",lecture_d:"Kindly don't interrupt. My sincere apologies.",
+  busy_l:"Focused work",busy_d:"If it can't wait, kindly call. With my thanks and appreciation.",
+  break_l:"Lunch break",break_d:"Prayer and a little rest. May Allah accept from all of us.",
+  comp_l:"Compensated hours",comp_d:"Stay well. Let's meet and connect once they're over, Allah willing.",wk_comp:"Compensated hours",
+  off_l:"After hours",off_d:"Stay well. Let's meet and connect on the next working day, Allah willing.",
+  exam_l:"In exam proctoring",exam_d:"Let's meet and connect once it's over, Allah willing.",
+  admin_l:"At the Administration",admin_d:"If it can't wait, kindly call. With my thanks and appreciation.",
+  council_l:"In a department council meeting",council_d:"Let's meet and connect once it's over, Allah willing.",
+  wk_title:"Weekly schedule",weekend:"Weekend",wk_lecture:"Course",wk_office:"Office hours",wk_busy:"Focused work",wk_gap:"Between tasks",wk_break:"Lunch break",today:"Today",col_time:"Time",col_act:"Activity",exam_tag:"Proctoring",exam_line:"Exam proctoring",council_tag:"Meeting",council_line:"Department council meeting"}
+};
+let LANG="ar";
+try{const v=localStorage.getItem("lang"); LANG=v==="en"||v==="ar"?v:(String(navigator.language||"ar").toLowerCase().startsWith("ar")?"ar":"en");}catch{LANG=String(navigator.language||"ar").toLowerCase().startsWith("ar")?"ar":"en";}
+const L=k=>T[LANG][k];
+const DAYS=T.ar.days;
+const NAMES={office:"متواجد في الكلية",lecture:"محاضرة",busy:"تحضير · بحث · تصحيح",break:"استراحة"};
+const toMin=s=>{const[h,m]=s.split(":").map(Number);return h*60+m};
+const W0=toMin(CONFIG.workStart),W1=toMin(CONFIG.workEnd),B0=toMin(CONFIG.breakStart),B1=toMin(CONFIG.breakEnd);
+const periodOn=date=>(CONFIG.periods||[]).find(p=>date&&date>=p.from&&date<=p.to);
+const blocks=(d,date,forTable)=>{
+  const p=periodOn(date);
+  const bs=(CONFIG.week[d]||[]).map(b=>{const x={...b,a:toMin(b.from),z:toMin(b.to)};if(p&&p.lectureAs&&x.type==="lecture"){x.type=p.lectureAs;delete x.title;}return x;});
+  let bs2=bs;(CONFIG.changes||[]).filter(c=>c.date===date&&!(forTable&&c.silent)).forEach(c=>{const a=toMin(c.from),z=toMin(c.to),nx=[];bs2.forEach(b=>{if(b.z<=a||b.a>=z){nx.push(b);return;}if(b.a<a)nx.push({...b,z:a});if(b.z>z)nx.push({...b,a:z});});nx.push({type:c.type,title:c.title,msg:c.msg,a,z});bs2=nx;});
+  bs2.sort((x,y)=>x.a-y.a);
+  const out=[];bs2.forEach(b=>{const l=out[out.length-1];if(l&&l.type===b.type&&b.type!=="lecture"&&b.a-l.z<=10)l.z=Math.max(l.z,b.z);else out.push(b);});
+  return out;
+};
+const fmt=min=>{let h=Math.floor(min/60),m=min%60;const ap=h<12?L("am"):L("pm");h=h%12||12;return `<span class="num">${h}:${String(m).padStart(2,"0")}</span> ${ap}`};
+
+function riyadhNow(){
+  const p=Object.fromEntries(new Intl.DateTimeFormat("en-US",{timeZone:"Asia/Riyadh",weekday:"short",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",hourCycle:"h23"}).formatToParts(new Date()).map(x=>[x.type,x.value]));
+  return {dow:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].indexOf(p.weekday),min:+p.hour*60+ +p.minute,date:`${p.year}-${p.month}-${p.day}`};
+}
+function stateAt(d,m,date){
+  if(d>4||m<W0||m>=W1) return {s:"off"};
+  const bl=blocks(d,date), b=bl.find(b=>m>=b.a&&m<b.z);
+  if(b) return {s:b.type==="meet"?"busy":b.type,b,z:b.z};
+  if(m>=B0&&m<B1) return {s:"break",z:B1};
+  const nb=bl.find(b=>b.a>m); let z=W1; if(m<B0)z=Math.min(z,B0); if(nb)z=Math.min(z,nb.a);
+  return {s:"gap",z};
+}
+const $=id=>document.getElementById(id);
+let sel=null;
+
+/* رسالة مؤقتة من ملف status.json — تُعدَّل بدون لمس هذه الصفحة */
+let NOTE=null;
+const COLORS={green:"office","أخضر":"office",yellow:"busy","أصفر":"busy",red:"lecture","أحمر":"lecture",grey:"off",gray:"off","رمادي":"off"};
+async function loadNote(){
+  try{const r=await fetch("status.json?t="+Date.now(),{cache:"no-store"}); NOTE=r.ok?await r.json():null;}catch{NOTE=null;}
+  render();
+}
+function activeNote(n){
+  if(!NOTE||!NOTE.active||!NOTE.label) return null;
+  const s=COLORS[String(NOTE.color||"yellow").trim().toLowerCase()]||"busy";
+  let untilTxt="";
+  if(NOTE.until){
+    const m=String(NOTE.until).trim().match(/^(?:(\d{4}-\d{2}-\d{2})\s+)?(\d{1,2}):(\d{2})$/);
+    if(m){const d=m[1]||n.date, t=+m[2]*60+ +m[3];
+      if(n.date>d||(n.date===d&&n.min>=t)) return null;
+      untilTxt=`${L("until")} ${fmt(t)}`+(d!==n.date?` · ${d}`:"");}
+  }
+  const en=LANG==="en";
+  return {s,label:(en&&NOTE.label_en)||NOTE.label,detail:(en&&NOTE.detail_en)||NOTE.detail||"",untilTxt};
+}
+
+function dayDate(n,d){
+  const [y,m,dd]=n.date.split("-").map(Number);
+  const base=n.dow<=4?-n.dow:7-n.dow;
+  const t=new Date(Date.UTC(y,m-1,dd+base+d));
+  return t.toISOString().slice(0,10);
+}
+function isoAdd(iso,k){const [y,m,d]=iso.split("-").map(Number);return new Date(Date.UTC(y,m-1,d+k)).toISOString().slice(0,10);}
+function weekendDate(n,d){return n.dow>=5?isoAdd(n.date,d-n.dow):isoAdd(n.date,d-n.dow);}
+function shortDate(iso){
+  const [y,m,d]=iso.split("-").map(Number), t=new Date(Date.UTC(y,m-1,d,12));
+  try{return LANG==="en"
+    ?new Intl.DateTimeFormat("en-GB-u-ca-gregory-nu-latn",{timeZone:"UTC",day:"numeric",month:"short"}).format(t)
+    :new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura-nu-latn",{timeZone:"UTC",day:"numeric",month:"long"}).format(t);}catch{return "";}
+}
+const OPEN=new Set();let weekInit=false;
+function renderWeek(n){
+  let h="";
+  for(let d=0;d<5;d++){
+    const dd=dayDate(n,d), per=periodOn(dd);
+    const fixed=[...blocks(d,dd,true),{a:B0,z:B1,type:"break"}].sort((x,y)=>x.a-y.a);
+    const items=[];let t=W0;
+    fixed.forEach(f=>{if(f.a-t>=30)items.push({a:t,z:f.a,type:"gap"});items.push(f);t=Math.max(t,f.z);});
+    if(W1-t>=30)items.push({a:t,z:W1,type:"gap"});
+    const today=d===n.dow;
+    const rows=items.map(b=>{
+      const ty=b.type==="meet"?"busy":b.type, cur=today&&n.min>=b.a&&n.min<b.z;
+      const name=ty==="lecture"?`${L("wk_lecture")} ${b.title||""}`:L("wk_"+ty);
+      return `<tr class="${cur?"cur":""}"><td class="t">${fmt(b.a)} – ${fmt(b.z)}</td><td><span class="a"><i class="${ty}"></i>${name}</span></td></tr>`;
+    }).join("");
+    const dut=(CONFIG.duties||[]).filter(x=>x.date===dd&&!x.silent).sort((x,y)=>toMin(x.from)-toMin(y.from));
+    const banner=dut.map(x=>`<p class="duty k-${x.kind||"exam"}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg><span class="dtx"><b>${L((x.kind||"exam")+"_line")} <bdi class="nw">${fmt(toMin(x.from))} – ${fmt(toMin(x.to))}</bdi></b></span></p>`).join("");
+    h+=`<details class="day" data-d="${d}"${OPEN.has(d)?" open":""}><summary>${L("days")[d]}<small class="dd">${shortDate(dd)}</small>${today?`<em>${L("today")}</em>`:""}${[...new Set(dut.map(x=>x.kind||"exam"))].map(k=>`<em class="dt k-${k}">${L(k+"_tag")}</em>`).join("")}${per?`<em class="pt">${L(per.kind+"_tag")}</em>`:""}</summary>${per?`<p class="duty pd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.5"/><path d="M12 11v5.5"/><path d="M12 7.6v.1"/></svg><span class="dtx"><b>${L(per.kind+"_line")}</b></span></p>`:""}${banner}<table class="sch"><thead><tr><th>${L("col_time")}</th><th>${L("col_act")}</th></tr></thead><tbody>${rows}</tbody></table></details>`;
+  }
+  const wkend=[5,6].map(d=>`<div class="day"><div class="dsum">${L("days")[d]}<small class="dd">${shortDate(weekendDate(n,d))}</small>${d===n.dow?`<em>${L("today")}</em>`:""}<em class="wk">${L("weekend")}</em></div></div>`).join("");
+  h=n.dow>=5?wkend+h:h+wkend;
+  $("weekBody").innerHTML=h;
+}
+
+function render(){
+  const n=riyadhNow();
+  const ov=CONFIG.override&&n.date>=CONFIG.override.from&&n.date<=CONFIG.override.to?CONFIG.override:null;
+  const nt=activeNote(n);
+  const duties=(CONFIG.duties||[]).filter(d=>d.date===n.date).map(d=>({a:toMin(d.from),z:toMin(d.to),k:d.kind||"exam"}));
+  const duty=duties.find(d=>n.min>=d.a&&n.min<d.z);
+  const st=duty?{s:duty.k,z:duty.z}:stateAt(n.dow,n.min,n.date);
+  if(!duty&&st.z!=null){const nx=duties.filter(d=>d.a>n.min&&d.a<st.z).sort((x,y)=>x.a-y.a)[0]; if(nx) st.z=nx.a;}
+  const s=nt?nt.s:(ov&&!duty)?"away":st.s;
+  let label,detail="",until="";
+  if(nt){label=nt.label;detail=nt.detail;until=nt.untilTxt;}
+  else if(ov&&!duty){label=ov.label;detail=ov.detail||"";}
+  else{label=L(s+"_l")+(s==="lecture"&&st.b&&st.b.title?" "+st.b.title:"");detail=(st.b&&st.b.msg&&st.b.msg[LANG])||L(s+"_d");
+    if(s==="lecture"||s==="exam"||s==="council"||s==="comp") until=`${L("ends")} ${fmt(st.z)}`;
+    else if(s!=="off") until=`${L("until")} ${fmt(st.z)}`;}
+
+  $("status").dataset.s=s;
+  $("sLabel").textContent=label; $("sDetail").textContent=detail; $("sDetail").hidden=!detail;
+  $("sUntil").innerHTML=until; $("sUntil").hidden=!until;
+
+  const callOK=s==="office", callUrgent=s==="busy"||s==="gap"||s==="admin";
+  $("chCall").className=callOK?"y":callUrgent?"w":"n";
+  $("chCallBd").innerHTML=callUrgent?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><path d="M12 6v7.5"/><path d="M12 18.2v.1"/></svg>':callOK?'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>':'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><path d="M7 7l10 10M17 7L7 17"/></svg>';
+  renderWeek(n);
+
+}
+
+let lastMin=-1;
+function tick(){
+  const p=Object.fromEntries(new Intl.DateTimeFormat("en-US",{timeZone:"Asia/Riyadh",weekday:"short",hour:"2-digit",minute:"2-digit",second:"2-digit",hourCycle:"h23"}).formatToParts(new Date()).map(x=>[x.type,x.value]));
+  const h=+p.hour, h12=h%12||12;
+  const now=new Date(), dname=L("days")[["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].indexOf(p.weekday)];
+  $("clock").innerHTML=`<span class="num">${h12}:${p.minute}:${p.second}</span> <small>${h<12?L("am"):L("pm")}</small>`;
+  let dt="";
+  try{
+    dt=LANG==="en"
+      ?new Intl.DateTimeFormat("en-GB-u-ca-gregory-nu-latn",{timeZone:"Asia/Riyadh",day:"numeric",month:"long",year:"numeric"}).format(now)
+      :new Intl.DateTimeFormat("ar-SA-u-ca-islamic-umalqura-nu-latn",{timeZone:"Asia/Riyadh",day:"numeric",month:"long",year:"numeric"}).format(now);
+  }catch{}
+  $("day").textContent=dt?`${dname} ${dt}`:dname;
+  const m=h*60+ +p.minute; if(m!==lastMin){lastMin=m;render();}
+}
+function applyLang(){
+  const r=document.documentElement; r.lang=LANG; r.dir=L("dir");
+  document.querySelectorAll("[data-t]").forEach(el=>{el.textContent=L(el.dataset.t);});
+  document.title=LANG==="en"?"Dr. Akram Faqeeh · Office":"مكتب د. أكرم فقيه";
+  const b=$("langBtn"); b.innerHTML=GLOBE; b.lang=LANG==="en"?"ar":"en"; b.setAttribute("aria-label",L("btnLabel"));
+  paintThemeBtn();
+  lastMin=-1; tick();
+}
+$("weekBody").addEventListener("toggle",e=>{const d=e.target.closest&&e.target.closest(".day");if(!d)return;const k=+d.dataset.d;d.open?OPEN.add(k):OPEN.delete(k);},true);
+const GLOBE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M2.8 12h18.4"/><path d="M12 2.8c2.4 2.5 3.6 5.6 3.6 9.2s-1.2 6.7-3.6 9.2c-2.4-2.5-3.6-5.6-3.6-9.2s1.2-6.7 3.6-9.2z"/></svg>';
+const SUN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>', MOON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.8 6.8 0 0 0 10.7 10.7z"/></svg>';
+const darkMQ=window.matchMedia?matchMedia("(prefers-color-scheme: dark)"):null;
+function isDark(){const t=document.documentElement.dataset.theme; return t?t==="dark":!!(darkMQ&&darkMQ.matches);}
+function paintThemeBtn(){const d=isDark(),b=$("themeBtn"); b.innerHTML=d?SUN:MOON; b.setAttribute("aria-label",d?L("themeLight"):L("themeDark"));}
+try{const t=localStorage.getItem("theme"); if(t==="dark"||t==="light") document.documentElement.dataset.theme=t;}catch{}
+$("themeBtn").addEventListener("click",()=>{const t=isDark()?"light":"dark"; document.documentElement.dataset.theme=t; try{localStorage.setItem("theme",t)}catch{} paintThemeBtn();});
+if(darkMQ&&darkMQ.addEventListener) darkMQ.addEventListener("change",paintThemeBtn);
+$("langBtn").addEventListener("click",()=>{LANG=LANG==="en"?"ar":"en"; try{localStorage.setItem("lang",LANG)}catch{} applyLang();});
+applyLang(); setInterval(tick,1000);
+loadNote(); setInterval(loadNote,60000);
+</script>
+
+</body>
+</html>
